@@ -4,7 +4,7 @@ const mail = require('sendmail')();
 const { writeFile } = require('fs');
 
 const URL = 'https://www.immigration.govt.nz/new-zealand-visas/apply-for-a-visa/about-visa/argentina-whs';
-const TIMEOUT = 4000;
+const TIMEOUT = 40000;
 const DIFFERENCE = 1;
 const FROM = 'iam@alvarouribe.cl';
 const TO = ['iam@alvarouribe.cl','uribe.gaston41@gmail.com','javieraciao@hotmail.com'];
