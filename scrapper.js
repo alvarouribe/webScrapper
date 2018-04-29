@@ -5,16 +5,14 @@ const curl = require("curl");
 const jsdom = require("jsdom");
 var website = "https://www.jbhifi.co.nz";
 var amountOfPages = 5;
+
+//connection to the db
 var MongoClient = require('mongodb').MongoClient;
 var mongoUrl = "mongodb://localhost:27017/";
 
 for(var page = 1; page <= amountOfPages; page++) {
   scrap(website + "/cameras/all-cameras/?p="+ page +"&s=displayPrice&sd=2");
 }
-
-// console.log(urls);
-// scrap(urls[0]);
-// scrap(urls[1]);
 
 async function scrap(url) {
   await curl.get(url, null, (err,resp,body)=> {
@@ -28,6 +26,23 @@ async function scrap(url) {
       //some error handling
       console.log("error while fetching url");
     }
+  });
+}
+
+async function insertData(myobj) {
+
+  var MongoClient = require('mongodb').MongoClient;
+  var url = "mongodb://localhost:27017/";
+
+  await MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("webScrapper");
+
+    dbo.collection("jb").insertMany(myobj, function(err, res) {
+      if (err) throw err;
+      console.log("Number of documents inserted: " + res.insertedCount);
+      db.close();
+    });
   });
 }
 
@@ -66,25 +81,7 @@ function parseData(html) {
         "onSale": onSale,
         "date": today
       });
-      // console.log(i + ") -> " + titleP + " [price]: " + price);    
     }
   }
   return results;
-}
-
-async function insertData(myobj) {
-
-  var MongoClient = require('mongodb').MongoClient;
-  var url = "mongodb://localhost:27017/";
-
-  await MongoClient.connect(url, function(err, db) {
-    if (err) throw err;
-    var dbo = db.db("webScrapper");
-
-    dbo.collection("jb").insertMany(myobj, function(err, res) {
-      if (err) throw err;
-      console.log("Number of documents inserted: " + res.insertedCount);
-      db.close();
-    });
-  });
 }
