@@ -1,6 +1,6 @@
 const { get } = require('https');
 const similar = require('similarity');
-const mail = require('sendmail')();
+// const mail = require('sendmail')();
 const { writeFile } = require('fs');
 
 const URL = 'https://www.jbhifi.co.nz/cameras/all-cameras/';
@@ -33,7 +33,7 @@ function run() {
     });
   
     res.on('end', () => {
-      
+      console.log('end');
       const difference = similar(base, html);
       console.log(`difference: ${difference}`);
 
@@ -47,20 +47,20 @@ function run() {
             if (err) console.error('Error writing file:', err);
           });
         
-          mail({
-            from: FROM,
-            to: TO,
-            subject: 'Scraper = Change Found',
-            html: 'Attached file...',
-            attachments: [
-              {   // utf-8 string as an attachment
-                filename: fileName,
-                content: html
-              }
-            ]
-          }, (err, reply) => {
-            console.error(err && err.stack);
-          });
+          // mail({
+          //   from: FROM,
+          //   to: TO,
+          //   subject: 'Scraper = Change Found',
+          //   html: 'Attached file...',
+          //   attachments: [
+          //     {   // utf-8 string as an attachment
+          //       filename: fileName,
+          //       content: html
+          //     }
+          //   ]
+          // }, (err, reply) => {
+          //   console.error(err && err.stack);
+          // });
         }
         firstTimer = false;
       }
