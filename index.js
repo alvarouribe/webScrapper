@@ -4,6 +4,7 @@ const mail = require('sendmail')();
 const { writeFile } = require('fs');
 
 const URL = 'https://www.jbhifi.co.nz/cameras/all-cameras/';
+// const URL = 'https://www.noelleeming.co.nz/shop/photography/digital-cameras/c10066-c10073-p1.html';
 const TIMEOUT = 40000;
 const DIFFERENCE = 1;
 const FROM = 'iam@alvarouribe.cl';
