@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2 start index.js"
+    "start": "node scrapper.js",
+    "pm2Start": "pm2 start index.js"
   },
   "author": "",
   "license": "ISC",
